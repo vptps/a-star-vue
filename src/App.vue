@@ -1,26 +1,36 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <app-menu
+    v-model:gridSize="gridSize"
+    v-model:speed="speed"
+    v-model:cellSize="cellSize"
+  /> <!-- replaces v2's v-bind.sync  -->
+  <grid
+    :gridSize="gridSize"
+    :cellSize="cellSize"
+  />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Grid from '@/components/Grid.vue';
+import AppMenu from '@/components/AppMenu.vue';
 
 export default {
   name: 'App',
+
+  data() {
+    return {
+      gridSize: 10,
+      speed: 1,
+      cellSize: 30
+    };
+  },
+
   components: {
-    HelloWorld
+    Grid,
+    AppMenu
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
