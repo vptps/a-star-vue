@@ -1,12 +1,23 @@
 <template>
     <div>Grid</div>
-    <div id="grid" style="'background-color: blue'" >
-      <div v-for="i in gridSize" :key="'row' + i" class="row">
+    <div
+      id="grid"
+      v-if="cellList.length"
+    >
+      <div
+        v-for="i in gridSize"
+        :key="'row' + i"
+        class="row"
+        @mousedown="editBlock = true"
+        @mouseup="editBlock = false"
+      >
         <cell 
           v-for="j in gridSize"
           :key="'col' + j"
           :cellSize="cellSize"
-          :id="(i=== 2 && j === gridSize -1 ? 'end' : (i=== gridSize - 1 && j === 2 ? 'start' : undefined))"
+          :cell="cellList[i - 1][j - 1]"
+          :editBlock="editBlock"
+          @toggleCrossable="reemit($event)"
         />
       </div>
     </div>
@@ -18,6 +29,12 @@ import Cell from '@/components/Cell.vue';
 export default {
   name: 'Grid',
 
+  data() {
+    return {
+      editBlock: false
+    };
+  },
+
   props: {
     gridSize: {
       type: Number,
@@ -26,12 +43,24 @@ export default {
     cellSize: {
       type: Number,
       required: true
+    },
+    cellList: {
+      type: Array,
+      required: true
     }
   },
 
   components: {
     Cell
-  }
+  },
+
+  methods: {
+    reemit (event) {
+      this.$emit('toggleCrossable', event);
+    }
+  },
+
+  emits: ['toggleCrossable']
 };
 </script>
 
@@ -45,12 +74,5 @@ export default {
 .cell {
   border: solid 1px black;
   float: left;
-}
-#end {
-  background-color: red;
-}
-
-#start {
-  background-color: green;
 }
 </style>

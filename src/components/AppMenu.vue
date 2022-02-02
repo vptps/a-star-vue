@@ -30,6 +30,9 @@
       :value="cellSize"
       @input="update('cellSize', $event)"
     />
+
+    <br /><br />
+    <button @click="$emit('startAlgo')">Start algo</button>
   </div>
 </template>
 
