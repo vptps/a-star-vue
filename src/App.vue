@@ -4,6 +4,7 @@
     v-model:speed="speed"
     v-model:cellSize="cellSize"
     @startAlgo="startAlgo"
+    @resetGrid="create2dArray"
   /> <!-- replaces v2's v-bind.sync  -->
   <grid
     :gridSize="gridSize"

@@ -33,6 +33,7 @@
 
     <br /><br />
     <button @click="$emit('startAlgo')">Start algo</button>
+    <button @click="$emit('resetGrid')">Reset</button>
   </div>
 </template>
 
