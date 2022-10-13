@@ -1,7 +1,7 @@
 <template>
   <div
-    @mouseover="setCrossable"
-    @mousedown="test"
+    @mouseover="setCrossable(editBlock)"
+    @mousedown="setCrossable(true)"
     :style="cellStyle"
     class="cell"
   >
@@ -32,19 +32,20 @@ export default {
       return {
         'height': `${this.cellSize}px`,
         'width': `${this.cellSize}px`,
-        'background-color': this.cell.start ? 'green' : this.cell.end ? 'red' : this.cell.current ? 'yellow' : this.cell.solution ? 'purple' : this.cell.closed ? 'lightblue' : this.cell.crossable ? 'white' : 'black'
+        'background-color': this.cell.start ? 'green'
+        : this.cell.end ? 'red'
+        : this.cell.current ? 'yellow'
+        : this.cell.solution ? 'purple'
+        : this.cell.closed ? 'lightblue'
+        : this.cell.crossable ? 'white'
+        : 'black'
       };
     }
   },
 
   methods: {
-    test () {
-      console.log('test', this.cell.x, this.cell.y)
-      this.$emit('toggleCrossable', {'x': this.cell.x, 'y': this.cell.y});
-    },
-
-    setCrossable () {
-      if (this.editBlock) {
+    setCrossable (editBlock) {
+      if (editBlock) {
         this.$emit('toggleCrossable', {'x': this.cell.x, 'y': this.cell.y});
       }
     }
