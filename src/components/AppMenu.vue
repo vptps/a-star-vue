@@ -28,6 +28,13 @@
       step="1"
       :value="cellSize"
       @input="update('cellSize', $event)"
+    /><br />
+
+    <label>Show coordinates</label>
+    <input
+      type="checkbox"
+      :value="showCoordinates"
+      @input="$emit('update:showCoordinates', !showCoordinates)"
     />
 
     <br /><br />
@@ -60,6 +67,10 @@ defineProps({
   cellSize: {
     type: Number,
     required: true
+  },
+  showCoordinates: {
+    type: Boolean,
+    required: true
   }
 });
 
@@ -88,7 +99,14 @@ function update (variable, event) {
   emit('update:' + variable, val);
 }
 
-const emit = defineEmits(['update:gridSize', 'update:speed', 'update:cellSize', 'startAlgo', 'resetGrid']);
+const emit = defineEmits({
+  'update:gridSize': size => !isNaN(size),
+  'update:speed': size => !isNaN(size),
+  'update:cellSize': size => !isNaN(size),
+  'update:showCoordinates': null,
+  'startAlgo': null,
+  'resetGrid': null
+});
 </script>
 
 <style>

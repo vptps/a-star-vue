@@ -6,11 +6,14 @@
     :style="cellStyle"
     class="cell"
   >
+    <span v-show="showCoordinates">
+      {{ cell.x }} {{ cell.y }}
+    </span>
   </div>
 </template>
 
 <script setup>
-import { defineProps, computed, defineEmits } from 'vue';
+import { defineProps, computed, defineEmits, inject } from 'vue';
 
 const props = defineProps({
   cellSize: {
@@ -48,8 +51,17 @@ function setCrossable (editBlock) {
     emit('toggleCrossable', {'x': props.cell.x, 'y': props.cell.y});
   }
 }
+
+// here we use a non-mandatory default value in case data was not provided
+const showCoordinates = inject('showCoordinates', false);
 </script>
 
 <style>
-  
+.cell {
+  font-size: 6px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 </style>

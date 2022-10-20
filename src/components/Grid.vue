@@ -12,11 +12,11 @@
     >
       <cell
         v-for="j in gridSize"
-        :key="'col' + j"
+        :key="'col' + j + '_' + i"
         :cellSize="cellSize"
         :cell="cellList[i - 1][j - 1]"
         :editBlock="editBlock"
-        @toggleCrossable="reemit($event)"
+        @toggleCrossable="reemit"
       />
     </div>
   </div>
@@ -44,7 +44,7 @@ defineProps({
   }
 });
 
-const emit = defineEmits(['toggleCrossable'])
+const emit = defineEmits(['toggleCrossable']);
 
 function reemit (evt) {
   emit('toggleCrossable', evt);

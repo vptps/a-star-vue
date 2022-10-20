@@ -4,6 +4,7 @@
       v-model:gridSize="gridSize"
       v-model:speed="speed"
       v-model:cellSize="cellSize"
+      v-model:showCoordinates="showCoordinates"
       @startAlgo="startAlgo"
       @resetGrid="create2dArray"
     /> <!-- replaces v2's v-bind.sync  -->
@@ -23,14 +24,15 @@
 import Grid from '@/components/Grid.vue';
 import AppMenu from '@/components/AppMenu.vue';
 
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, provide } from 'vue';
 import { showSolution, getNodeNeighbours, getDistance, compareNodes, sleep } from '@/utils/utils.js';
 
 
-const gridSize = ref(15);
-const speed = ref(1);
-const cellSize = ref(30);
+const gridSize = ref(20);
+const speed = ref(5);
+const cellSize = ref(25);
 const cellList = ref([]);
+const showCoordinates = ref(false);
 
 function create2dArray () {
   cellList.value = [];
@@ -122,7 +124,10 @@ watch(gridSize, () => {
 
 onMounted(() => {
   create2dArray();
-})
+});
+
+// provide/inject, used to avoid props drilling
+provide('showCoordinates', showCoordinates);
 </script>
 
 <style>
