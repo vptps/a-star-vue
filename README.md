@@ -1,4 +1,5 @@
 # a-star-vue
+Sole purpose of this project is to get used to composition api and to Vue3
 
 ## Project setup
 ```
