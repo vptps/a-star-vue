@@ -1,26 +1,25 @@
 <template>
-    <div>Grid</div>
+  <div
+    id="grid"
+    v-if="cellList.length"
+  >
     <div
-      id="grid"
-      v-if="cellList.length"
+      v-for="i in gridSize"
+      :key="'row' + i"
+      class="row"
+      @mousedown="editBlock = true"
+      @mouseup="editBlock = false"
     >
-      <div
-        v-for="i in gridSize"
-        :key="'row' + i"
-        class="row"
-        @mousedown="editBlock = true"
-        @mouseup="editBlock = false"
-      >
-        <cell 
-          v-for="j in gridSize"
-          :key="'col' + j"
-          :cellSize="cellSize"
-          :cell="cellList[i - 1][j - 1]"
-          :editBlock="editBlock"
-          @toggleCrossable="reemit($event)"
-        />
-      </div>
+      <cell
+        v-for="j in gridSize"
+        :key="'col' + j"
+        :cellSize="cellSize"
+        :cell="cellList[i - 1][j - 1]"
+        :editBlock="editBlock"
+        @toggleCrossable="reemit($event)"
+      />
     </div>
+  </div>
 </template>
 
 <script setup>

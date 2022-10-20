@@ -1,7 +1,6 @@
 <template>
   <div>
-    <span>AppMenu</span><br />
-    <span>Grid size:</span>
+    <label>Grid size</label>
     <input
       type="number"
       :min="customOptions.MIN_GRID_SIZE"
@@ -11,7 +10,7 @@
       @input="update('gridSize', $event)"
     /><br />
 
-    <span>Speed</span>
+    <label>Speed</label>
     <input
       type="number"
       :min="customOptions.MIN_SPEED"
@@ -21,7 +20,7 @@
       @input="update('speed', $event)"
     /><br />
 
-    <span>Cell size</span>
+    <label>Cell size</label>
     <input
       type="number"
       :min="customOptions.MIN_CELL_SIZE"
@@ -89,9 +88,15 @@ function update (variable, event) {
   emit('update:' + variable, val);
 }
 
-const emit = defineEmits(['update:gridSize', 'update:speed', 'update:cellSize', 'startAlgo']);
+const emit = defineEmits(['update:gridSize', 'update:speed', 'update:cellSize', 'startAlgo', 'resetGrid']);
 </script>
 
 <style>
+input {
+  float: right;
+}
 
+label {
+  float: left;
+}
 </style>

@@ -36,7 +36,7 @@ const cellStyle = computed(() => {
     : props.cell.current ? 'yellow'
     : props.cell.solution ? 'purple'
     : props.cell.closed ? 'lightblue'
-    : props.cell.crossable ? 'white'
+    : props.cell.crossable ? '#e8fdee'
     : 'black'
   };
 });
