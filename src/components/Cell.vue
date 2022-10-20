@@ -1,5 +1,6 @@
 <template>
   <div
+    draggable="false"
     @mouseover="setCrossable(editBlock)"
     @mousedown="setCrossable(true)"
     :style="cellStyle"
@@ -8,51 +9,45 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Cell',
+<script setup>
+import { defineProps, computed, defineEmits } from 'vue';
 
-  props: {
-    cellSize: {
-      type: Number,
-      required: true
-    },
-    cell: {
-      type: Object,
-      required: true
-    },
-    editBlock: {
-      type: Boolean,
-      required: true
-    }
+const props = defineProps({
+  cellSize: {
+    type: Number,
+    required: true
   },
-
-  computed: {
-    cellStyle () {
-      return {
-        'height': `${this.cellSize}px`,
-        'width': `${this.cellSize}px`,
-        'background-color': this.cell.start ? 'green'
-        : this.cell.end ? 'red'
-        : this.cell.current ? 'yellow'
-        : this.cell.solution ? 'purple'
-        : this.cell.closed ? 'lightblue'
-        : this.cell.crossable ? 'white'
-        : 'black'
-      };
-    }
+  cell: {
+    type: Object,
+    required: true
   },
+  editBlock: {
+    type: Boolean,
+    required: true
+  }
+});
 
-  methods: {
-    setCrossable (editBlock) {
-      if (editBlock) {
-        this.$emit('toggleCrossable', {'x': this.cell.x, 'y': this.cell.y});
-      }
-    }
-  },
+const cellStyle = computed(() => {
+  return {
+    'height': `${props.cellSize}px`,
+    'width': `${props.cellSize}px`,
+    'background-color': props.cell.start ? 'green'
+    : props.cell.end ? 'red'
+    : props.cell.current ? 'yellow'
+    : props.cell.solution ? 'purple'
+    : props.cell.closed ? 'lightblue'
+    : props.cell.crossable ? 'white'
+    : 'black'
+  };
+});
 
-  emits: ['toggleCrossable']
-};
+const emit = defineEmits(['toggleCrossable']);
+
+function setCrossable (editBlock) {
+  if (editBlock) {
+    emit('toggleCrossable', {'x': props.cell.x, 'y': props.cell.y});
+  }
+}
 </script>
 
 <style>

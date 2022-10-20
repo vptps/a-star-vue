@@ -4,8 +4,8 @@
     <span>Grid size:</span>
     <input
       type="number"
-      :min="$options.MIN_GRID_SIZE"
-      :max="$options.MAX_GRID_SIZE"
+      :min="customOptions.MIN_GRID_SIZE"
+      :max="customOptions.MAX_GRID_SIZE"
       step="1"
       :value="gridSize"
       @input="update('gridSize', $event)"
@@ -14,8 +14,8 @@
     <span>Speed</span>
     <input
       type="number"
-      :min="$options.MIN_SPEED"
-      :max="$options.MAX_SPEED"
+      :min="customOptions.MIN_SPEED"
+      :max="customOptions.MAX_SPEED"
       step="1"
       :value="speed"
       @input="update('speed', $event)"
@@ -24,8 +24,8 @@
     <span>Cell size</span>
     <input
       type="number"
-      :min="$options.MIN_CELL_SIZE"
-      :max="$options.MAX_CELL_SIZE"
+      :min="customOptions.MIN_CELL_SIZE"
+      :max="customOptions.MAX_CELL_SIZE"
       step="1"
       :value="cellSize"
       @input="update('cellSize', $event)"
@@ -37,59 +37,59 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AppMenu',
+<script setup>
+import { defineProps, defineEmits, readonly } from 'vue';
 
-  MIN_GRID_SIZE: 5, 
-  MAX_GRID_SIZE: 60,
-  MIN_SPEED: 1,
-  MAX_SPEED: 10,
-  MIN_CELL_SIZE: 20,
-  MAX_CELL_SIZE: 100,
+const customOptions = readonly({
+  'MIN_GRID_SIZE': 5,
+  'MAX_GRID_SIZE': 60,
+  'MIN_SPEED': 1,
+  'MAX_SPEED': 10,
+  'MIN_CELL_SIZE': 20,
+  'MAX_CELL_SIZE': 70
+});
 
-  props: {
-    gridSize: {
-      type: Number,
-      required: true
-    },
-    speed: {
-      type: Number,
-      required: true
-    },
-    cellSize: {
-      type: Number,
-      required: true
-    }
+defineProps({
+  gridSize: {
+    type: Number,
+    required: true
   },
-
-  methods: {
-    getConstFromVariable (variable) {
-      switch(variable) {
-        case 'gridSize': return 'GRID_SIZE';
-        case 'speed': return 'SPEED';
-        case 'cellSize': return 'CELL_SIZE';
-        default: return 0;
-      }
-    },
-
-    update (variable, event) {
-      let val = parseInt(event.target.value);
-      const CONST = this.getConstFromVariable(variable);
-
-      if (isNaN(val)) {
-        val = this.$options[`MIN_${CONST}`]
-      }
-      if (val > this.$options[`MAX_${CONST}`]) {
-        val = this.$options[`MAX_${CONST}`];
-      }
-      if (val < this.$options[`MIN_${CONST}`]) {
-        val = this.$options[`MIN_${CONST}`];
-      }
-      this.$emit('update:' + variable, val);
-    },
+  speed: {
+    type: Number,
+    required: true
   },
-};
+  cellSize: {
+    type: Number,
+    required: true
+  }
+});
+
+function getConstFromVariable (variable) {
+  switch(variable) {
+    case 'gridSize': return 'GRID_SIZE';
+    case 'speed': return 'SPEED';
+    case 'cellSize': return 'CELL_SIZE';
+    default: return 0;
+  }
+}
+
+function update (variable, event) {
+  let val = parseInt(event.target.value);
+  const CONST = getConstFromVariable(variable);
+
+  if (isNaN(val)) {
+    val = customOptions[`MIN_${CONST}`]
+  }
+  if (val > customOptions[`MAX_${CONST}`]) {
+    val = customOptions[`MAX_${CONST}`];
+  }
+  if (val < customOptions[`MIN_${CONST}`]) {
+    val = customOptions[`MIN_${CONST}`];
+  }
+  emit('update:' + variable, val);
+}
+
+const emit = defineEmits(['update:gridSize', 'update:speed', 'update:cellSize', 'startAlgo']);
 </script>
 
 <style>

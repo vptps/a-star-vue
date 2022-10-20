@@ -23,45 +23,33 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import Cell from '@/components/Cell.vue';
 
-export default {
-  name: 'Grid',
+import { ref, defineProps, defineEmits } from 'vue';
 
-  data() {
-    return {
-      editBlock: false
-    };
+const editBlock = ref(false)
+
+defineProps({
+  gridSize: {
+    type: Number,
+    required: true
   },
-
-  props: {
-    gridSize: {
-      type: Number,
-      required: true
-    },
-    cellSize: {
-      type: Number,
-      required: true
-    },
-    cellList: {
-      type: Array,
-      required: true
-    }
+  cellSize: {
+    type: Number,
+    required: true
   },
+  cellList: {
+    type: Array,
+    required: true
+  }
+});
 
-  components: {
-    Cell
-  },
+const emit = defineEmits(['toggleCrossable'])
 
-  methods: {
-    reemit (event) {
-      this.$emit('toggleCrossable', event);
-    }
-  },
-
-  emits: ['toggleCrossable']
-};
+function reemit (evt) {
+  emit('toggleCrossable', evt);
+}
 </script>
 
 <style>
